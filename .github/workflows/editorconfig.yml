@@ -16,3 +16,5 @@ jobs:
           node-version: '20'
       - run: npm ci
       - run: npm run editorconfig
+    env:
+      EC_VERSION: v3.0.3 # Used for `editorconfig-checker`. Issue: https://github.com/editorconfig-checker/editorconfig-checker/issues/409
