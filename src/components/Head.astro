@@ -7,6 +7,8 @@ export interface Props {
     keywords: string;
 }
 
+const isTesting = import.meta.env.MODE === "testing";
+
 const { title, description, keywords } = Astro.props;
 
 const authorContent = `${author.name}, ${author.role}. Contact: ${author.email}, ${author.website}`;
@@ -15,6 +17,7 @@ const authorContent = `${author.name}, ${author.role}. Contact: ${author.email},
 <head>
     <title>{title}</title>
     <meta charset="UTF-8" />
+    {isTesting && <meta content="noindex, nofollow" name="robots" />}
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <meta content={description} name="description" />
     <meta content={authorContent} name="author" />

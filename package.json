@@ -6,6 +6,7 @@
     "dev": "astro dev",
     "check": "astro check",
     "editorconfig": "editorconfig-checker",
+    "build:testing": "astro build --mode testing",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
