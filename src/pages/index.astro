@@ -1,0 +1,12 @@
+---
+import index from "../data/index.json";
+
+import BaseLayout from "../layouts/BaseLayout/BaseLayout.astro";
+---
+
+<BaseLayout
+    headProps={{
+        ...index.head,
+        keywords: index.head.keywords.join(", "),
+    }}
+/>
