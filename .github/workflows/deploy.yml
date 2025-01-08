@@ -1,0 +1,45 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Set up Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build project
+        run: npm run build
+
+      - name: Configure AWS CLI
+        run: |
+          sudo apt-get update && sudo apt-get install -y awscli
+          aws configure set aws_access_key_id $YC_ACCESS_KEY --profile yc
+          aws configure set aws_secret_access_key $YC_SECRET_KEY --profile yc
+          aws configure set default.region $YC_REGION --profile yc
+        env:
+          YC_ACCESS_KEY: ${{ secrets.YC_ACCESS_KEY }}
+          YC_SECRET_KEY: ${{ secrets.YC_SECRET_KEY }}
+          YC_REGION: ${{ secrets.YC_REGION }}
+
+      - name: Sync to Yandex S3
+        run: |
+          aws s3 sync ./dist s3://${{ secrets.YC_BUCKET_NAME }} \
+            --endpoint-url $YC_ENDPOINT \
+            --profile yc \
+            --delete
+        env:
+          YC_BUCKET_NAME: ${{ secrets.YC_BUCKET_NAME }}
+          YC_ENDPOINT: ${{ secrets.YC_ENDPOINT }}
