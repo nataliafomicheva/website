@@ -1,11 +1,11 @@
-# https://github.com/pepelsbey/pepelsbey.dev/blob/main/.stylelintrc.yml
-
 extends:
   - stylelint-config-standard
+  - stylelint-config-standard-scss
   - stylelint-config-html
 plugins:
   - stylelint-order
 rules:
+  # https://github.com/pepelsbey/pepelsbey.dev/blob/main/.stylelintrc.yml
   order/properties-order:
     # Positioning
     - all
@@ -291,3 +291,7 @@ rules:
     - animation-range-start
     - animation-timeline
     - animation-timing-function
+  selector-class-pattern:
+    - "^[a-z0-9]+(?:-[a-z0-9]+)*(?:__[a-z0-9]+(?:-[a-z0-9]+)*)?(?:--[a-z0-9]+(?:-[a-z0-9]+)*(?:_[a-z0-9]+(?:-[a-z0-9]+)*)?)?$"
+    - resolveNestedSelectors: true
+      message: "Selector must match BEM pattern: .block, .block__element, .block--mod, .block--mod_value"
