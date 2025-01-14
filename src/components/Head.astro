@@ -1,5 +1,7 @@
 ---
 import author from "../data/author.json";
+import "@fontsource-variable/inter";
+import interWoff2 from "@fontsource-variable/inter/files/inter-cyrillic-wght-normal.woff2?url";
 
 export interface Props {
     title: string;
@@ -22,4 +24,11 @@ const authorContent = `${author.name}, ${author.role}. Contact: ${author.email},
     <meta content={description} name="description" />
     <meta content={authorContent} name="author" />
     <meta content={keywords} name="keywords" />
+    <link
+        as="font"
+        crossorigin="anonymous"
+        href={interWoff2}
+        rel="preload"
+        type="font/woff2"
+    />
 </head>
