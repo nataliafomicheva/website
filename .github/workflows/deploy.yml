@@ -25,7 +25,6 @@ jobs:
 
       - name: Configure AWS CLI
         run: |
-          sudo apt-get update && sudo apt-get install -y awscli
           aws configure set aws_access_key_id $YC_ACCESS_KEY --profile yc
           aws configure set aws_secret_access_key $YC_SECRET_KEY --profile yc
           aws configure set default.region $YC_REGION --profile yc
