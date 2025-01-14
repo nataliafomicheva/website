@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+
 jobs:
   testing:
     runs-on: ubuntu-latest
@@ -23,16 +24,12 @@ jobs:
       - name: Build project
         run: npm run build:testing
 
-      - name: Configure AWS CLI
-        run: |
-          sudo apt-get update && sudo apt-get install -y awscli
-          aws configure set aws_access_key_id $YC_ACCESS_KEY --profile yc
-          aws configure set aws_secret_access_key $YC_SECRET_KEY --profile yc
-          aws configure set default.region $YC_REGION --profile yc
-        env:
-          YC_ACCESS_KEY: ${{ secrets.YC_ACCESS_KEY }}
-          YC_SECRET_KEY: ${{ secrets.YC_SECRET_KEY }}
-          YC_REGION: ${{ secrets.YC_REGION }}
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.YC_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.YC_SECRET_KEY }}
+          aws-region: ${{ secrets.YC_REGION }}
 
       - name: Sync to Yandex S3
         run: |
