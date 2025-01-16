@@ -1,0 +1,9 @@
+@use "./variables/index";
+
+.body {
+    background: var(--color-background-primary);
+    color: var(--color-text-primary);
+    font-family: var(--font-family-primary);
+
+    @include index.variables;
+}
