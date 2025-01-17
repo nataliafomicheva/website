@@ -1,4 +1,5 @@
 @use "./variables/index";
+@use "reset-css";
 
 .body {
     background: var(--color-background-primary);
