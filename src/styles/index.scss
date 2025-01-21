@@ -1,10 +1,29 @@
 @use "./variables/index";
 @use "reset-css";
+@use "./defaults";
+@use "./mixins";
 
 .body {
     background: var(--color-background-primary);
     color: var(--color-text-primary);
-    font-family: var(--font-family-primary);
+    font-family: var(--text-font-family-primary);
 
+    @include mixins.text-body-1;
     @include index.variables;
+
+    &--locked {
+        overflow: hidden;
+    }
+}
+
+h1 {
+    @include mixins.text-display-1;
+}
+
+h2 {
+    @include mixins.text-heading-2;
+}
+
+h3 {
+    @include mixins.text-heading-3;
 }
