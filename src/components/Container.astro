@@ -1,0 +1,16 @@
+<div class="container">
+    <slot />
+</div>
+<style lang="scss">
+    .container {
+        padding: 0 var(--container-padding);
+        width: var(--container-width);
+        max-width: var(--container-max-width);
+    }
+
+    @media (width > 768px) {
+        .container {
+            margin: 0 auto;
+        }
+    }
+</style>
