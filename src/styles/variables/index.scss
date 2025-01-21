@@ -1,7 +1,9 @@
 @use "./colors";
 @use "./typography";
+@use "./viewport";
 
 @mixin variables {
     @include colors.variables;
     @include typography.variables;
+    @include viewport.variables;
 }

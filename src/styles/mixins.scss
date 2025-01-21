@@ -1,0 +1,35 @@
+@mixin text-display-1 {
+    line-height: var(--text-line-height-display-1);
+    font-weight: var(--text-font-weight-display-1);
+    font-size: var(--text-font-size-display-1);
+}
+
+@mixin text-heading-2 {
+    line-height: var(--text-line-height-heading-2);
+    font-weight: var(--text-font-weight-heading-2);
+    font-size: var(--text-font-size-heading-2);
+}
+
+@mixin text-heading-3 {
+    line-height: var(--text-line-height-heading-3);
+    font-weight: var(--text-font-weight-heading-3);
+    font-size: var(--text-font-size-heading-3);
+    font-family: var(--text-font-family-secondary);
+}
+
+@mixin text-body-1 {
+    line-height: var(--text-line-height-body-1);
+    font-weight: var(--text-font-weight-body-1);
+    font-size: var(--text-font-size-body-1);
+}
+
+@mixin text-caption-1 {
+    line-height: var(--text-line-height-caption-1);
+    font-weight: var(--text-font-weight-caption-1);
+    font-size: var(--text-font-size-caption-1);
+    letter-spacing: var(--text-letter-spacing-caption-1);
+}
+
+@mixin box-shadow-light {
+    box-shadow: 0 0 16px rgb(0 0 0 / 15%);
+}
