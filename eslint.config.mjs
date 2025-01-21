@@ -9,4 +9,17 @@ export default tseslint.config(
     tseslint.configs.recommended,
     ...eslintPluginAstro.configs.all,
     eslintPluginPrettierRecommended,
+    {
+        // fixes <script> linting rules inside .astro files
+        // https://github.com/withastro/prettier-plugin-astro/issues/407
+        files: ["**/*.astro/*.ts"],
+        rules: {
+            "prettier/prettier": "off",
+        },
+    },
+    {
+        rules: {
+            "@typescript-eslint/no-empty-object-type": "off",
+        },
+    },
 );
