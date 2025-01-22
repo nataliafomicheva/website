@@ -1,0 +1,217 @@
+---
+import bem from "easy-bem";
+import Bars from "../assets/icons/bars.svg";
+import Cross from "../assets/icons/cross.svg";
+import type { LinkGroup, Link } from "../types";
+import Dropdown from "./Dropdown.astro";
+import Details from "./Details.astro";
+
+const cn = bem("navbar-menu");
+
+export type NavbarLink = Link | LinkGroup;
+
+interface Props {
+    links: NavbarLink[];
+}
+
+const ICON_SIZE = 20;
+const { links } = Astro.props;
+---
+
+<div class:list={cn()}>
+    <button class:list={cn("button")} type="button">
+        <Bars class:list={cn("icon", { bars: true })} size={ICON_SIZE} />
+        <Cross
+            class:list={cn("icon", { cross: true, hidden: true })}
+            size={ICON_SIZE}
+        />
+    </button>
+    <ul class:list={cn("list", { hidden: true })}>
+        {
+            links.map(({ href, nestedLinks, text }) => {
+                if (nestedLinks) {
+                    return (
+                        <li class:list={cn("list-item")}>
+                            <Details class:list={cn("links")} open>
+                                <Fragment slot="summary-content">
+                                    {text}
+                                </Fragment>
+                                <ul
+                                    class:list={cn("links-list")}
+                                    slot="content"
+                                >
+                                    {nestedLinks.map(({ href, text }) => (
+                                        <li class:list={cn("links-list-item")}>
+                                            <a
+                                                class:list={cn("links-link")}
+                                                href={href}
+                                            >
+                                                {text}
+                                            </a>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </Details>
+                            <Dropdown
+                                class:list={cn("dropdown", { hidden: true })}
+                                text={text}
+                            >
+                                <ul
+                                    class:list={cn("dropdown-list")}
+                                    slot="popup-content"
+                                >
+                                    {nestedLinks.map((link) => (
+                                        <li
+                                            class:list={cn(
+                                                "dropdown-list-item",
+                                            )}
+                                        >
+                                            <a href={link.href}>{link.text}</a>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </Dropdown>
+                        </li>
+                    );
+                }
+
+                return (
+                    <li class:list={cn("list-item")}>
+                        <a class:list={cn("link")} href={href}>
+                            {text}
+                        </a>
+                    </li>
+                );
+            })
+        }
+    </ul>
+</div>
+
+<style lang="scss">
+    @use "../styles/mixins";
+
+    .navbar-menu {
+        --navbar-menu-list-top: var(--navbar-height);
+        --navbar-menu-list-gap: 40px;
+        --navbar-menu-list-padding: 24px 16px;
+        --navbar-menu-list-height: calc(100vh - var(--navbar-height));
+        --navbar-menu-list-background: var(--navbar-background-color);
+        --navbar-menu-list-item-font-size: 20px;
+        --navbar-menu-links-list-gap: 20px;
+        --navbar-menu-links-list-margin-top: 24px;
+
+        &__button {
+            &--hidden {
+                display: none;
+            }
+        }
+
+        &__icon {
+            &--hidden {
+                display: none;
+            }
+        }
+
+        &__list {
+            position: absolute;
+            top: var(--navbar-menu-list-top);
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            gap: var(--navbar-menu-list-gap);
+            padding: var(--navbar-menu-list-padding);
+            width: 100%;
+            height: var(--navbar-menu-list-height);
+            background: var(--navbar-menu-list-background);
+            transition: left 0.3s ease-in-out;
+
+            &--hidden {
+                left: 100%;
+            }
+
+            &-item {
+                font-size: var(--navbar-menu-list-item-font-size);
+            }
+        }
+
+        &__links {
+            &-list {
+                display: flex;
+                flex-direction: column;
+                gap: var(--navbar-menu-links-list-gap);
+                margin-top: var(--navbar-menu-links-list-margin-top);
+
+                &-item {
+                    @include mixins.text-body-1;
+                }
+            }
+
+            &--hidden {
+                display: none;
+            }
+        }
+
+        &__dropdown {
+            &--hidden {
+                display: none;
+            }
+        }
+    }
+
+    @media (width > 768px) {
+        .navbar-menu {
+            --navbar-menu-list-item-font-size: unset;
+
+            &__list {
+                position: unset;
+                flex-direction: unset;
+                height: unset;
+            }
+        }
+    }
+</style>
+
+<script>
+    const initializeNavbarMenuInteraction = () => {
+        const bodyElement = document.body;
+        const menuButtonElement = document.querySelector(
+            ".navbar-menu__button",
+        );
+        const menuIconBars = document.querySelector(".navbar-menu__icon--bars");
+        const menuIconCross = document.querySelector(
+            ".navbar-menu__icon--cross",
+        );
+        const menuListElement = document.querySelector(".navbar-menu__list");
+
+        menuButtonElement?.addEventListener("click", () => {
+            menuIconBars?.classList.toggle("navbar-menu__icon--hidden");
+            menuIconCross?.classList.toggle("navbar-menu__icon--hidden");
+            menuListElement?.classList.toggle("navbar-menu__list--hidden");
+            bodyElement.classList.toggle("body--locked");
+        });
+    };
+
+    initializeNavbarMenuInteraction();
+</script>
+
+<!-- need inline as it should be processed before mobile menu is rendered -->
+<script is:inline>
+    const NAVBAR_MOBILE_BREAKPOINT = 768;
+    const documentWidth = document.documentElement.clientWidth;
+
+    if (documentWidth > NAVBAR_MOBILE_BREAKPOINT) {
+        const menuButtonElement = document.querySelector(
+            ".navbar-menu__button",
+        );
+        const menuLinksElement = document.querySelector(".navbar-menu__links");
+        const menuDropdownElement = document.querySelector(
+            ".navbar-menu__dropdown",
+        );
+        const menuListElement = document.querySelector(".navbar-menu__list");
+
+        menuListElement?.classList.remove("navbar-menu__list--hidden");
+        menuButtonElement?.classList.add("navbar-menu__button--hidden");
+        menuLinksElement?.classList.add("navbar-menu__links--hidden");
+        menuDropdownElement?.classList.remove("navbar-menu__dropdown--hidden");
+    }
+</script>
