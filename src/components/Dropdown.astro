@@ -1,0 +1,130 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import bem from "easy-bem";
+
+const cn = bem("dropdown");
+
+interface Props extends HTMLAttributes<"details"> {
+    text: string;
+    popupClassName?: string;
+}
+
+const { class: className, popupClassName, text, ...props } = Astro.props;
+---
+
+<details class:list={[cn(), className]} {...props}>
+    <summary class:list={cn("text", { hidden: true })}>{text}</summary>
+    <div class:list={[cn("popup", { hidden: true }), popupClassName]}>
+        <slot name="popup-content" />
+    </div>
+</details>
+
+<style lang="scss">
+    @use "../styles/mixins";
+
+    .dropdown {
+        --dropdown-text-icon-size: 12px;
+        --dropdown-text-gap: 8px;
+        --dropdown-popup-background: var(--color-background-primary);
+        --dropdown-popup-triangle-size: 8px;
+        --dropdown-popup-top: calc(100% + var(--dropdown-popup-triangle-size));
+        --dropdown-popup-border-radius: 8px;
+        --dropdown-popup-translate: translate(-50%, 0px);
+        --dropdown-text-arrow-transform: rotate(0deg);
+
+        position: relative;
+        display: inline-block;
+        cursor: pointer;
+
+        &__text {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: var(--dropdown-text-gap);
+            list-style: none;
+
+            &::after {
+                width: var(--dropdown-text-icon-size);
+                height: var(--dropdown-text-icon-size);
+                background-image: url("../assets/icons/chevron.svg");
+                background-position: center;
+                background-size: var(--dropdown-text-icon-size);
+                content: "";
+                transform: var(--dropdown-text-arrow-transform);
+                transition: all 0.1s linear;
+            }
+
+            &--hidden::after {
+                --dropdown-text-arrow-transform: rotate(180deg);
+            }
+        }
+
+        &__popup {
+            position: absolute;
+            top: var(--dropdown-popup-top);
+            left: 50%;
+            border-radius: var(--dropdown-popup-border-radius);
+            background: var(--dropdown-popup-background);
+            transform: var(--dropdown-popup-translate);
+            transition: all 0.1s linear;
+            opacity: 1;
+
+            @include mixins.box-shadow-light;
+
+            &--hidden {
+                opacity: 0;
+
+                --dropdown-popup-translate: translate(-50%, 8px);
+            }
+
+            &::before {
+                position: absolute;
+                top: calc(-1 * var(--dropdown-popup-triangle-size));
+                left: 50%;
+                width: 0;
+                height: 0;
+                border-width: 0 calc(var(--dropdown-popup-triangle-size) / 2)
+                    var(--dropdown-popup-triangle-size);
+                border-style: solid;
+                border-color: transparent transparent
+                    var(--dropdown-popup-background);
+                content: "";
+                transform: translateX(-50%);
+            }
+        }
+    }
+</style>
+
+<script>
+    const dropdownElements = document.querySelectorAll(".dropdown");
+
+    dropdownElements.forEach((dropdown) => {
+        let closeTimer: number | null = null;
+        const CLOSE_TIMER_DELAY = 500;
+        const dropdownPopup = dropdown.querySelector(".dropdown__popup");
+        const dropdownText = dropdown.querySelector(".dropdown__text");
+
+        dropdown.addEventListener("mouseenter", () => {
+            if (closeTimer) {
+                clearTimeout(closeTimer);
+                closeTimer = null;
+            }
+
+            dropdown.setAttribute("open", "true");
+            setTimeout(() => {
+                dropdownText?.classList.remove("dropdown__text--hidden");
+                dropdownPopup?.classList.remove("dropdown__popup--hidden");
+            });
+        });
+
+        dropdown.addEventListener("mouseleave", () => {
+            closeTimer = setTimeout(() => {
+                dropdownText?.classList.add("dropdown__text--hidden");
+                dropdownPopup?.classList.add("dropdown__popup--hidden");
+                setTimeout(() => {
+                    dropdown.removeAttribute("open");
+                }, 100); // need 100ms for animation to end
+            }, CLOSE_TIMER_DELAY);
+        });
+    });
+</script>
