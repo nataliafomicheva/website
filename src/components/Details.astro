@@ -1,0 +1,59 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import bem from "easy-bem";
+
+const cn = bem("details");
+
+interface Props extends HTMLAttributes<"details"> {
+    summaryClassName?: string;
+    containerClassName?: string;
+}
+
+const {
+    class: className,
+    summaryClassName,
+    containerClassName,
+    ...props
+} = Astro.props;
+---
+
+<details class:list={[cn(), className]} {...props}>
+    <summary class:list={[cn("text"), summaryClassName]}>
+        <slot name="summary-content" />
+    </summary>
+    <div class:list={[cn("container"), containerClassName]}>
+        <slot name="content" />
+    </div>
+</details>
+
+<style lang="scss">
+    .details {
+        --details-text-gap: 8px;
+        --details-icon-size: 12px;
+
+        cursor: pointer;
+
+        &__text {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: var(--details-text-gap);
+            list-style: none;
+
+            &::after {
+                width: var(--details-icon-size);
+                height: var(--details-icon-size);
+                background-image: url("../assets/icons/chevron.svg");
+                background-position: center;
+                background-size: var(--details-icon-size);
+                content: "";
+                transform: rotate(180deg);
+                transition: transform 0.1s linear;
+            }
+        }
+    }
+
+    .details[open] .details__text::after {
+        transform: rotate(0);
+    }
+</style>
