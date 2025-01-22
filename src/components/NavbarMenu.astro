@@ -66,7 +66,12 @@ const { links } = Astro.props;
                                                 "dropdown-list-item",
                                             )}
                                         >
-                                            <a href={link.href}>{link.text}</a>
+                                            <a
+                                                class:list={cn("dropdown-link")}
+                                                href={link.href}
+                                            >
+                                                {link.text}
+                                            </a>
                                         </li>
                                     ))}
                                 </ul>
@@ -99,6 +104,10 @@ const { links } = Astro.props;
         --navbar-menu-list-item-font-size: 20px;
         --navbar-menu-links-list-gap: 20px;
         --navbar-menu-links-list-margin-top: 24px;
+        --navbar-menu-dropdown-list-padding: 8px;
+        --navbar-menu-dropdown-list-min-width: 210px;
+        --navbar-menu-dropdown-link-padding: 8px;
+        --navbar-menu-dropdown-link-background: var(--color-background-generic);
 
         &__button {
             &--hidden {
@@ -154,6 +163,24 @@ const { links } = Astro.props;
         &__dropdown {
             &--hidden {
                 display: none;
+            }
+
+            &-list {
+                padding: var(--navbar-menu-dropdown-list-padding) 0;
+                min-width: var(--navbar-menu-dropdown-list-min-width);
+            }
+
+            &-link {
+                display: block;
+                padding: var(--navbar-menu-dropdown-link-padding);
+
+                @include mixins.text-caption-1;
+
+                transition: background-color 50ms ease-out;
+
+                &:hover {
+                    background: var(--navbar-menu-dropdown-link-background);
+                }
             }
         }
     }
