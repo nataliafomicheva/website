@@ -126,5 +126,9 @@ const { class: className, popupClassName, text, ...props } = Astro.props;
                 }, 100); // need 100ms for animation to end
             }, CLOSE_TIMER_DELAY);
         });
+
+        dropdown.addEventListener("click", (evt) => {
+            evt.preventDefault();
+        });
     });
 </script>
