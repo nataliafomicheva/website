@@ -1,0 +1,58 @@
+---
+import bem from "easy-bem";
+import Container from "./Container.astro";
+import Logo from "../assets/icons/logo.svg";
+import { navbarLinks } from "../data/navbarLinks.json";
+import NavbarMenu from "./NavbarMenu.astro";
+
+const cn = bem("navbar");
+
+const LOGO_WIDTH = 30;
+---
+
+<header class:list={cn()}>
+    <Container>
+        <nav
+            aria-label="Основная навигация"
+            class:list={cn("navigation")}
+            role="navigation"
+        >
+            <a aria-label="Главная страница" class:list={cn("logo")} href="/">
+                <Logo height="100%" width={LOGO_WIDTH} />
+            </a>
+            <NavbarMenu links={navbarLinks} />
+        </nav>
+    </Container>
+</header>
+
+<style is:global lang="scss">
+    .navbar {
+        --navbar-background-color: var(--color-background-primary);
+        --navbar-border-color: var(--color-line-base);
+        --navbar-height: 50px;
+        --navbar-z-index: var(--z-index-navbar);
+
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: var(--navbar-z-index);
+        display: flex;
+        align-items: center;
+        width: 100%;
+        height: var(--navbar-height);
+        border-bottom: 1px solid var(--navbar-border-color);
+        background: var(--navbar-background-color);
+
+        &__navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    }
+
+    @media (width > 768px) {
+        .navbar {
+            --navbar-height: 60px;
+        }
+    }
+</style>
