@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { experimental_AstroContainer as AstroContainer } from "astro/container";
-import { navbarLinks } from "../../src/data/navbarLinks.json";
+import { navigationLinks } from "../../src/data/navigationLinks.json";
 
 import Navbar from "../../src/components/Navbar.astro";
 
@@ -23,7 +23,7 @@ describe("Navbar.astro", () => {
 
     it("renders passed links", async () => {
         const container = await AstroContainer.create();
-        const props = { links: navbarLinks };
+        const props = { links: navigationLinks };
 
         const result = await container.renderToString(Navbar, { props });
 

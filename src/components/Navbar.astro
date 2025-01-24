@@ -2,7 +2,7 @@
 import bem from "easy-bem";
 import Container from "./Container.astro";
 import Logo from "../assets/icons/logo.svg";
-import { navbarLinks } from "../data/navbarLinks.json";
+import { navigationLinks } from "../data/navigationLinks.json";
 import NavbarMenu from "./NavbarMenu.astro";
 
 const cn = bem("navbar");
@@ -20,7 +20,7 @@ const LOGO_WIDTH = 30;
             <a aria-label="Главная страница" class:list={cn("logo")} href="/">
                 <Logo height="100%" width={LOGO_WIDTH} />
             </a>
-            <NavbarMenu links={navbarLinks} />
+            <NavbarMenu links={navigationLinks} />
         </nav>
     </Container>
 </header>
