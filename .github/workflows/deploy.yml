@@ -23,6 +23,7 @@ jobs:
       - name: Build project
         run: npm run build:testing
 
+
       - name: Configure AWS CLI
         run: |
           aws configure set aws_access_key_id $YC_ACCESS_KEY --profile yc
@@ -34,12 +35,19 @@ jobs:
           YC_SECRET_KEY: ${{ secrets.YC_SECRET_KEY }}
           YC_REGION: ${{ secrets.YC_REGION }}
 
+      - name: Test credentials
+        run: |
+          aws sts get-caller-identity \
+            --endpoint-url $YC_ENDPOINT \
+            --profile yc
+
       - name: Sync to Yandex S3
         run: |
           aws s3 sync ./dist s3://${{ secrets.YC_BUCKET_NAME }} \
             --endpoint-url $YC_ENDPOINT \
             --profile yc \
-            --delete
+            --delete \
+            --debug
         env:
           YC_BUCKET_NAME: ${{ secrets.YC_BUCKET_NAME }}
           YC_ENDPOINT: ${{ secrets.YC_ENDPOINT }}
