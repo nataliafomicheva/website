@@ -8,6 +8,9 @@ jobs:
   testing:
     runs-on: ubuntu-latest
 
+    container:
+      image: amazon/aws-cli:2.22.35
+
     steps:
       - name: Check out code
         uses: actions/checkout@v3
