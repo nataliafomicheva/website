@@ -1,6 +1,7 @@
 ---
 import type { HTMLAttributes } from "astro/types";
 import bem from "easy-bem";
+import Chevron from "../assets/icons/chevron.svg";
 
 const cn = bem("dropdown");
 
@@ -9,11 +10,18 @@ interface Props extends HTMLAttributes<"details"> {
     popupClassName?: string;
 }
 
+const ICON_SIZE = 12;
+
 const { class: className, popupClassName, text, ...props } = Astro.props;
 ---
 
 <details class:list={[cn(), className]} {...props}>
-    <summary class:list={cn("text", { hidden: true })}>{text}</summary>
+    <summary class:list={cn("summary")}>
+        <span class:list={cn("text")}>
+            {text}
+        </span>
+        <Chevron class:list={cn("icon", { hidden: true })} size={ICON_SIZE} />
+    </summary>
     <div class:list={[cn("popup", { hidden: true }), popupClassName]}>
         <slot name="popup-content" />
     </div>
@@ -23,39 +31,31 @@ const { class: className, popupClassName, text, ...props } = Astro.props;
     @use "../styles/mixins";
 
     .dropdown {
-        --dropdown-text-icon-size: 12px;
-        --dropdown-text-gap: 8px;
+        --dropdown-summary-gap: 8px;
+        --dropdown-icon-transform: rotate(0deg);
         --dropdown-popup-background: var(--color-background-primary);
         --dropdown-popup-triangle-size: 8px;
         --dropdown-popup-top: calc(100% + var(--dropdown-popup-triangle-size));
         --dropdown-popup-border-radius: 8px;
         --dropdown-popup-translate: translate(-50%, 0px);
-        --dropdown-text-arrow-transform: rotate(0deg);
 
         position: relative;
         display: inline-block;
         cursor: pointer;
 
-        &__text {
-            position: relative;
+        &__summary {
             display: flex;
             align-items: center;
-            gap: var(--dropdown-text-gap);
+            gap: var(--dropdown-summary-gap);
             list-style: none;
+        }
 
-            &::after {
-                width: var(--dropdown-text-icon-size);
-                height: var(--dropdown-text-icon-size);
-                background-image: url("../assets/icons/chevron.svg");
-                background-position: center;
-                background-size: var(--dropdown-text-icon-size);
-                content: "";
-                transform: var(--dropdown-text-arrow-transform);
-                transition: all 0.1s linear;
-            }
+        &__icon {
+            transform: var(--dropdown-icon-transform);
+            transition: all 0.1s linear;
 
-            &--hidden::after {
-                --dropdown-text-arrow-transform: rotate(180deg);
+            &--hidden {
+                --dropdown-icon-transform: rotate(180deg);
             }
         }
 
@@ -102,7 +102,7 @@ const { class: className, popupClassName, text, ...props } = Astro.props;
         let closeTimer: number | null = null;
         const CLOSE_TIMER_DELAY = 500;
         const dropdownPopup = dropdown.querySelector(".dropdown__popup");
-        const dropdownText = dropdown.querySelector(".dropdown__text");
+        const dropdownIcon = dropdown.querySelector(".dropdown__icon");
 
         dropdown.addEventListener("mouseenter", () => {
             if (closeTimer) {
@@ -112,14 +112,14 @@ const { class: className, popupClassName, text, ...props } = Astro.props;
 
             dropdown.setAttribute("open", "true");
             setTimeout(() => {
-                dropdownText?.classList.remove("dropdown__text--hidden");
+                dropdownIcon?.classList.remove("dropdown__icon--hidden");
                 dropdownPopup?.classList.remove("dropdown__popup--hidden");
             });
         });
 
         dropdown.addEventListener("mouseleave", () => {
             closeTimer = setTimeout(() => {
-                dropdownText?.classList.add("dropdown__text--hidden");
+                dropdownIcon?.classList.add("dropdown__icon--hidden");
                 dropdownPopup?.classList.add("dropdown__popup--hidden");
                 setTimeout(() => {
                     dropdown.removeAttribute("open");
