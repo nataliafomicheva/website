@@ -23,6 +23,11 @@ jobs:
       - name: Build project
         run: npm run build:testing
 
+      - name: Install AWS CLI
+        run: |
+          pip install --upgrade pip
+          pip install awscli==2.22.35
+
       - name: Configure AWS CLI
         run: |
           aws configure set aws_access_key_id $YC_ACCESS_KEY --profile yc
