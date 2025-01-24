@@ -1,6 +1,7 @@
 ---
 import type { HTMLAttributes } from "astro/types";
 import bem from "easy-bem";
+import Chevron from "../assets/icons/chevron.svg";
 
 const cn = bem("details");
 
@@ -8,6 +9,8 @@ interface Props extends HTMLAttributes<"details"> {
     summaryClassName?: string;
     containerClassName?: string;
 }
+
+const ICON_SIZE = 12;
 
 const {
     class: className,
@@ -18,8 +21,11 @@ const {
 ---
 
 <details class:list={[cn(), className]} {...props}>
-    <summary class:list={[cn("text"), summaryClassName]}>
-        <slot name="summary-content" />
+    <summary class:list={[cn("summary"), summaryClassName]}>
+        <span class:list={cn("text")}>
+            <slot name="summary-content" />
+        </span>
+        <Chevron class:list={cn("icon")} size={ICON_SIZE} />
     </summary>
     <div class:list={[cn("container"), containerClassName]}>
         <slot name="content" />
@@ -28,32 +34,24 @@ const {
 
 <style lang="scss">
     .details {
-        --details-text-gap: 8px;
-        --details-icon-size: 12px;
+        --details-summary-gap: 8px;
 
         cursor: pointer;
 
-        &__text {
-            position: relative;
+        &__summary {
             display: flex;
             align-items: center;
-            gap: var(--details-text-gap);
+            gap: var(--details-summary-gap);
             list-style: none;
+        }
 
-            &::after {
-                width: var(--details-icon-size);
-                height: var(--details-icon-size);
-                background-image: url("../assets/icons/chevron.svg");
-                background-position: center;
-                background-size: var(--details-icon-size);
-                content: "";
-                transform: rotate(180deg);
-                transition: transform 0.1s linear;
-            }
+        &__icon {
+            transform: rotate(180deg);
+            transition: transform 0.1s linear;
         }
     }
 
-    .details[open] .details__text::after {
+    .details[open] .details__icon {
         transform: rotate(0);
     }
 </style>
