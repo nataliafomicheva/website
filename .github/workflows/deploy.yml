@@ -28,6 +28,7 @@ jobs:
           aws configure set aws_access_key_id $YC_ACCESS_KEY --profile yc
           aws configure set aws_secret_access_key $YC_SECRET_KEY --profile yc
           aws configure set default.region $YC_REGION --profile yc
+          aws configure set default.s3.signature_version s3v4 --profile yc
         env:
           YC_ACCESS_KEY: ${{ secrets.YC_ACCESS_KEY }}
           YC_SECRET_KEY: ${{ secrets.YC_SECRET_KEY }}
