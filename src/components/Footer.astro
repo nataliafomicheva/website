@@ -1,0 +1,260 @@
+---
+import bem from "easy-bem";
+import { contacts } from "../data/contacts.json";
+import { developer } from "../data/developer.json";
+import { registrationCodes } from "../data/registrationCodes.json";
+import { address } from "../data/address.json";
+import { copyright } from "../data/copyright.json";
+import Container from "./Container.astro";
+import type { HTMLAttributes } from "astro/types";
+import { navigationLinks } from "../data/navigationLinks.json";
+import Details from "./Details.astro";
+
+const cn = bem("footer");
+
+interface FooterContactLink extends HTMLAttributes<"a"> {
+    text: string;
+}
+
+const footerContactLinks: FooterContactLink[] = [
+    ...contacts,
+    { ...address, target: "_blank", rel: "noopener noreferrer" },
+];
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer class:list={cn()}>
+    <Container>
+        <div class:list={cn("content")}>
+            <address class:list={cn("contacts")}>
+                <ul class:list={cn("contacts-list")}>
+                    {
+                        footerContactLinks.map(({ text, ...link }) => (
+                            <li class:list={cn("contacts-item")}>
+                                <a class:list={cn("contacts-link")} {...link}>
+                                    {text}
+                                </a>
+                            </li>
+                        ))
+                    }
+                </ul>
+            </address>
+            <nav class:list={cn("navigation")}>
+                <ul class:list={cn("list")}>
+                    {
+                        navigationLinks.map(({ href, nestedLinks, text }) => {
+                            if (nestedLinks) {
+                                return (
+                                    <li class:list={cn("list-item")}>
+                                        <Details class:list={cn("links")} open>
+                                            <span
+                                                class:list={cn("link")}
+                                                slot="summary-content"
+                                            >
+                                                {text}
+                                            </span>
+                                            <ul
+                                                class:list={cn("links-list")}
+                                                slot="content"
+                                            >
+                                                {nestedLinks.map(
+                                                    ({ href, text }) => (
+                                                        <li
+                                                            class:list={cn(
+                                                                "links-list-item",
+                                                            )}
+                                                        >
+                                                            <a
+                                                                class:list={cn(
+                                                                    "links-link",
+                                                                )}
+                                                                href={href}
+                                                            >
+                                                                {text}
+                                                            </a>
+                                                        </li>
+                                                    ),
+                                                )}
+                                            </ul>
+                                        </Details>
+                                    </li>
+                                );
+                            }
+
+                            return (
+                                <li class:list={cn("list-item")}>
+                                    <a class:list={cn("link")} href={href}>
+                                        {text}
+                                    </a>
+                                </li>
+                            );
+                        })
+                    }
+                </ul>
+            </nav>
+        </div>
+        <div class:list={cn("bottom")}>
+            <div class:list={cn("legal")}>
+                <p class:list={cn("copyright")}>
+                    <small>
+                        &copy; {currentYear}, {copyright}
+                    </small>
+                </p>
+                <dl class:list={cn("registration-codes")}>
+                    {
+                        registrationCodes.map((code) => (
+                            <div class:list={cn("code-pair")}>
+                                <dt class:list={cn("code-term")}>{code.key}</dt>
+                                <dd class:list={cn("code-details")}>
+                                    {code.value}
+                                </dd>
+                            </div>
+                        ))
+                    }
+                </dl>
+            </div>
+            <p class:list={cn("developer")}>
+                <small>
+                    <span class:list={cn("developer-text")}>
+                        Designed & developed by
+                    </span>
+                    <a
+                        class:list={cn("developer-link")}
+                        href={developer.href}
+                        rel="noopener noreferrer"
+                        target="_blank"
+                    >
+                        {developer.text}
+                    </a>
+                </small>
+            </p>
+        </div>
+    </Container>
+</footer>
+
+<style lang="scss">
+    @use "../styles/mixins";
+
+    .footer {
+        --footer-background: var(--color-background-contrast);
+        --footer-padding: 40px 0 20px 0;
+        --footer-content-min-height: 180px;
+        --footer-color: var(--color-text-contrast);
+        --footer-content-gap: 40px;
+        --footer-content-margin-bottom: 40px;
+        --footer-contacts-list-gap: 12px;
+        --footer-list-gap: 40px;
+        --footer-links-list-gap: 20px;
+        --footer-link-font-size: 20px;
+        --footer-links-list-margin-top: 24px;
+        --footer-bottom-font-size: 10px;
+        --footer-legal-margin-bottom: 20px;
+        --footer-registration-codes-gap: 4px;
+        --footer-code-pair-gap: 2px;
+
+        padding: var(--footer-padding);
+        background: var(--footer-background);
+        color: var(--footer-color);
+
+        &__content {
+            display: grid;
+            gap: var(--footer-content-gap);
+            margin-bottom: var(--footer-content-margin-bottom);
+            min-height: var(--footer-content-min-height);
+        }
+
+        &__contacts {
+            &-list {
+                display: flex;
+                flex-direction: column;
+                gap: var(--footer-contacts-list-gap);
+            }
+        }
+
+        &__list {
+            display: grid;
+            gap: var(--footer-list-gap);
+        }
+
+        &__links {
+            &-list {
+                display: grid;
+                gap: var(--footer-links-list-gap);
+                margin-top: var(--footer-links-list-margin-top);
+            }
+        }
+
+        &__link {
+            font-size: var(--footer-link-font-size);
+        }
+
+        &__bottom {
+            line-height: auto;
+            font-size: var(--footer-bottom-font-size);
+            opacity: 0.2;
+        }
+
+        &__legal {
+            margin-bottom: var(--footer-legal-margin-bottom);
+        }
+
+        &__registration-codes {
+            display: flex;
+            gap: var(--footer-registration-codes-gap);
+        }
+
+        &__code {
+            &-pair {
+                display: flex;
+                gap: var(--footer-code-pair-gap);
+            }
+
+            &-term {
+                &::after {
+                    content: ": ";
+                }
+            }
+        }
+    }
+
+    @media (width > 768px) {
+        .footer {
+            --footer-content-grid-template-columns: 202fr 654fr;
+            --footer-content-gap: 24px;
+            --footer-content-margin-bottom: 60px;
+            --footer-list-grid-template-columns: repeat(3, 1fr);
+            --footer-list-gap: 24px;
+            --footer-links-list-margin-top: 20px;
+            --footer-legal-margin-bottom: unset;
+            --footer-legal-gap: 16px;
+
+            @include mixins.text-caption-1;
+
+            &__content {
+                grid-template-columns: var(
+                    --footer-content-grid-template-columns
+                );
+            }
+
+            &__list {
+                grid-template-columns: var(--footer-list-grid-template-columns);
+            }
+
+            &__link {
+                @include mixins.text-body-1;
+            }
+
+            &__bottom {
+                display: flex;
+                justify-content: space-between;
+            }
+
+            &__legal {
+                display: flex;
+                gap: var(--footer-legal-gap);
+                margin-top: auto;
+            }
+        }
+    }
+</style>
