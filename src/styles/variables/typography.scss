@@ -27,9 +27,12 @@
     --text-letter-spacing-caption-1: auto;
 
     @media (width > 768px) {
+        // Text
+        --text-font-size-body-1: 16px;
+        --text-line-height-body-1: 20px;
+
         //  Caption
         --text-font-size-caption-1: 14px;
-        --text-font-weight-caption-1: 400;
         --text-line-height-caption-1: 16px;
         --text-letter-spacing-caption-1: -0.04rem;
     }
