@@ -1,0 +1,16 @@
+{
+  "contacts": [
+    {
+      "text": "an-prof@inbox.ru",
+      "href": "mailto:an-prof@inbox.ru"
+    },
+    {
+      "text": "+7-(910)-914-97-06",
+      "href": "tel:+79109149706"
+    },
+    {
+      "text": "+7-(902)-391-01-31",
+      "href": "tel:+79023910131"
+    }
+  ]
+}
