@@ -1,0 +1,36 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"main"> {}
+const props = Astro.props;
+---
+
+<main {...props}>
+    <slot />
+</main>
+
+<style lang="scss">
+    main {
+        margin-top: var(--navbar-height);
+    }
+</style>
+
+<script is:inline>
+    function setMinHeight() {
+        const mainElement = document.querySelector("main");
+        const navbar = document.querySelector(".navbar");
+        const footer = document.querySelector(".footer");
+
+        const navbarHeight = navbar.offsetHeight;
+        const footerHeight = footer.offsetHeight;
+        const viewportHeight = window.innerHeight;
+
+        const mainMinHeight = viewportHeight - navbarHeight - footerHeight;
+        mainElement.style.minHeight = `${Math.max(mainMinHeight, 0)}px`;
+    }
+
+    const updateHeight = () => requestAnimationFrame(setMinHeight);
+
+    document.addEventListener("DOMContentLoaded", updateHeight);
+    window.addEventListener("resize", updateHeight);
+</script>
