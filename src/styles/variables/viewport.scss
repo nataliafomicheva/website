@@ -4,10 +4,17 @@
     --container-width: 100%;
     --container-max-width: 100%;
 
+    // navbar
+    --navbar-height: 50px;
+
     // z-index
     --z-index-navbar: 1000;
 
     @media (width > 768px) {
+        // container
         --container-max-width: 896px;
+
+        // navbar
+        --navbar-height: 60px;
     }
 }
