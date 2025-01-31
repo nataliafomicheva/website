@@ -4,6 +4,8 @@
 @use "./mixins";
 
 .body {
+    display: flex;
+    flex-direction: column;
     background: var(--color-background-primary);
     color: var(--color-text-primary);
     font-family: var(--text-font-family-primary);

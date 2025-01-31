@@ -10,6 +10,9 @@
     // z-index
     --z-index-navbar: 1000;
 
+    // main
+    --main-min-height: 517px;
+
     @media (width > 768px) {
         // container
         --container-max-width: 896px;

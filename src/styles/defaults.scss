@@ -26,3 +26,9 @@ button {
 details summary::-webkit-details-marker {
     display: none;
 }
+
+html,
+body {
+    margin: 0;
+    height: 100%;
+}
