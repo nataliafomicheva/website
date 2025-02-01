@@ -1,0 +1,65 @@
+---
+import bem from "easy-bem";
+import Footer from "../components/Footer.astro";
+import Main from "../components/Main.astro";
+import Navbar from "../components/Navbar.astro";
+import notFound from "../data/404.json";
+import BaseLayout from "../layouts/BaseLayout/BaseLayout.astro";
+import Container from "../components/Container.astro";
+import Button from "../components/Button.astro";
+
+const cn = bem("page-404");
+---
+
+<BaseLayout
+    headProps={{
+        ...notFound.head,
+    }}
+>
+    <Navbar />
+    <Main class:list={cn()}>
+        <div class:list={cn("wrapper")}>
+            <Container>
+                <section class:list={cn("content")}>
+                    <h1 class:list={cn("title")}>
+                        {notFound.title}
+                    </h1>
+                    <p class:list={cn("text")}>
+                        {notFound.text}
+                    </p>
+                    <Button href="/">{notFound.link.text}</Button>
+                </section>
+            </Container>
+        </div>
+    </Main>
+    <Footer />
+</BaseLayout>
+
+<style lang="scss">
+    .page-404 {
+        --page-404-title-margin-bottom: 12px;
+        --page-404-text-color: var(--color-text-secondary);
+        --page-404-text-max-width: 413px;
+        --page-404-text-margin-bottom: 32px;
+
+        &__wrapper {
+            display: flex;
+            align-items: center;
+            height: 100%;
+        }
+
+        &__content {
+            position: relative;
+        }
+
+        &__title {
+            margin-bottom: var(--page-404-title-margin-bottom);
+        }
+
+        &__text {
+            margin-bottom: var(--page-404-text-margin-bottom);
+            max-width: var(--page-404-text-max-width);
+            color: var(--page-404-text-color);
+        }
+    }
+</style>
