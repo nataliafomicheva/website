@@ -1,0 +1,67 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import bem from "easy-bem";
+
+interface Props extends HTMLAttributes<"button"> {
+    href?: string;
+    size?: "l";
+    view?: "primary";
+}
+
+const cn = bem("button");
+
+const {
+    href,
+    size = "l",
+    view = "primary",
+    class: className,
+    ...props
+} = Astro.props;
+
+const classList = [cn({ size: size, view: view }), className];
+---
+
+{
+    href ? (
+        <a class:list={classList} href={href} {...props}>
+            <slot />
+        </a>
+    ) : (
+        <button class:list={classList} {...props}>
+            <slot />
+        </button>
+    )
+}
+
+<style lang="scss">
+    .button {
+        display: inline-block;
+        padding: var(--button-padding);
+        border-radius: var(--button-border-radius);
+        background: var(--button-background);
+        color: var(--button-color);
+        transition: background-color 0.1s ease;
+
+        &--size {
+            &_l {
+                --button-border-radius: 4px;
+                --button-padding: 16px 40px;
+            }
+        }
+
+        &--view {
+            &_primary {
+                --button-background: var(--color-background-contrast);
+                --button-color: var(--color-text-contrast);
+                --button-background-hover: var(
+                    --color-background-contrast-hover
+                );
+            }
+        }
+
+        &:hover,
+        &:focus-within {
+            --button-background: var(--button-background-hover);
+        }
+    }
+</style>
