@@ -53,7 +53,6 @@ it(`renders with empty props`, async () => {
 
     expect(result).toContain("<title></title>");
     expect(result).toContain('<meta name="description">');
-    expect(result).toContain('<meta name="keywords">');
 });
 
 it("renders author meta tag", async () => {

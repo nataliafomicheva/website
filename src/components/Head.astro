@@ -7,7 +7,7 @@ import interWoff2 from "@fontsource-variable/inter/files/inter-cyrillic-wght-nor
 export interface Props {
     title: string;
     description: string;
-    keywords: string;
+    keywords?: string;
 }
 
 const isTesting = import.meta.env.MODE === "testing";
@@ -24,7 +24,7 @@ const authorContent = `${author.name}, ${author.role}. Contact: ${author.email},
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <meta content={description} name="description" />
     <meta content={authorContent} name="author" />
-    <meta content={keywords} name="keywords" />
+    {keywords && <meta content={keywords} name="keywords" />}
     <link
         as="font"
         crossorigin="anonymous"
