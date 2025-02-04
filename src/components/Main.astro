@@ -1,16 +1,21 @@
 ---
 import type { HTMLAttributes } from "astro/types";
+import bem from "easy-bem";
 
 interface Props extends HTMLAttributes<"main"> {}
-const props = Astro.props;
+const { class: className, ...props } = Astro.props;
+
+const cn = bem("main");
+
+const classList = [cn(), className];
 ---
 
-<main {...props}>
+<main class:list={classList} {...props}>
     <slot />
 </main>
 
 <style lang="scss">
-    main {
+    .main {
         margin-top: var(--navbar-height);
         min-height: var(--main-min-height);
     }
