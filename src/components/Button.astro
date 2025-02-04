@@ -35,17 +35,26 @@ const classList = [cn({ size: size, view: view }), className];
 
 <style lang="scss">
     .button {
+        --button-font-size: inherit;
+        --button-font-weight: inherit;
+        --button-line-height: inherit;
+
         display: inline-block;
         padding: var(--button-padding);
         border-radius: var(--button-border-radius);
         background: var(--button-background);
         color: var(--button-color);
+        line-height: var(--button-line-height);
+        font-weight: var(--button-font-weight);
+        font-size: var(--button-font-size);
         transition: background-color 0.1s ease;
 
         &--size {
             &_l {
+                --button-font-size: 20px;
+                --button-font-weight: 600;
                 --button-border-radius: 4px;
-                --button-padding: 16px 40px;
+                --button-padding: 20px 40px;
             }
         }
 
@@ -62,6 +71,18 @@ const classList = [cn({ size: size, view: view }), className];
         &:hover,
         &:focus-within {
             --button-background: var(--button-background-hover);
+        }
+    }
+
+    @media (width > 768px) {
+        .button {
+            &--size {
+                &_l {
+                    --button-font-size: 24px;
+                    --button-padding: 24px 48px;
+                    --button-border-radius: 8px;
+                }
+            }
         }
     }
 </style>
