@@ -22,4 +22,10 @@ export default tseslint.config(
             "@typescript-eslint/no-empty-object-type": "off",
         },
     },
+    {
+        // fixes issues with easy-bem usage
+        rules: {
+            "astro/no-unused-css-selector": "off",
+        },
+    },
 );
