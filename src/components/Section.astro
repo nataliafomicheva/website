@@ -1,0 +1,16 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import bem from "easy-bem";
+
+interface Props extends HTMLAttributes<"section"> {}
+
+const { class: className, ...props } = Astro.props as Props;
+
+const cn = bem("section");
+
+const classList = [cn(), className];
+---
+
+<section class:list={classList} {...props}>
+    <slot />
+</section>
