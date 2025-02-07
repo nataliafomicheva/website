@@ -1,7 +1,13 @@
 ---
+import bem from "easy-bem";
+import Footer from "../components/Footer.astro";
+import Main from "../components/Main.astro";
+import Navbar from "../components/Navbar.astro";
 import index from "../data/index.json";
-
+import Hero from "../components/index/Hero.astro";
 import BaseLayout from "../layouts/BaseLayout/BaseLayout.astro";
+
+const cn = bem("index-page");
 ---
 
 <BaseLayout
@@ -9,4 +15,16 @@ import BaseLayout from "../layouts/BaseLayout/BaseLayout.astro";
         ...index.head,
         keywords: index.head.keywords.join(", "),
     }}
-/>
+>
+    <Navbar />
+    <Main class:list={cn()}>
+        <Hero class:list={cn("hero")} />
+    </Main>
+    <Footer />
+</BaseLayout>
+
+<style lang="scss">
+    .index-page {
+        min-height: unset;
+    }
+</style>
