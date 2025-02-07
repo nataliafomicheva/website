@@ -1,0 +1,177 @@
+---
+import bem from "easy-bem";
+import Section from "../Section.astro";
+import { hero } from "../../data/index.json";
+import { dealsNumber } from "../../data/brand.json";
+import Button from "../Button.astro";
+import Container from "../Container.astro";
+
+const { title, text, button } = hero;
+
+const titleParts = title.split(" ");
+
+const cn = bem("hero");
+
+const enhancement = `Более ${Math.floor(dealsNumber / 1000)},000 успешных сделок!`;
+---
+
+<Section class:list={cn()}>
+    <Container>
+        <div class:list={cn("content")}>
+            <h1 class:list={cn("title")}>
+                <span class:list={cn("title-part", { first: true })}>
+                    {titleParts[0]}
+                </span>
+                <span class:list={cn("title-part", { second: true })}>
+                    {titleParts[1]}
+                </span>
+            </h1>
+            <p class:list={cn("text")}>
+                {text}
+            </p>
+            <Button class:list={cn("button")} size="l" view="primary">
+                <span class:list={cn("button-text")}>
+                    {button.text}
+                </span>
+                <span class:list={cn("button-label")}>
+                    {button.label}
+                </span>
+            </Button>
+            <p class:list={cn("enhancement")}>{enhancement}</p>
+        </div>
+    </Container>
+</Section>
+
+<style lang="scss">
+    .hero {
+        // general
+        --hero-padding-top: 180px;
+        --hero-min-height: 550px;
+
+        // background
+        --hero-content-background-size: 340px;
+        --hero-content-background-right: -15%;
+        --hero-content-background-bottom: 0;
+
+        // title
+        --hero-title-margin-bottom: 8px;
+        --hero-title-max-width: 344px;
+        --hero-title-part-first-font-size: 70px;
+
+        // text
+        --hero-text-margin-bottom: 64px;
+        --hero-text-font-size: 20px;
+        --hero-text-lint-height: 24px;
+
+        // button-label
+        --hero-button-label-background: var(--color-brand-secondary);
+        --hero-button-label-box-shadow: 0 0 16px
+            var(--hero-button-label-background);
+        --hero-button-label-font-size: 16px;
+        --hero-button-label-line-height: 16px;
+        --hero-button-label-font-weight: 400;
+        --hero-button-label-padding: 8px 16px;
+        --hero-button-label-border-radius: 16px;
+
+        // enhancement
+        --hero-enhancement-margin-top: 8px;
+
+        padding-top: var(--hero-padding-top);
+        min-height: var(--hero-min-height);
+        background: var(--color-brand-main);
+        color: var(--color-text-contrast);
+
+        &__content {
+            position: relative;
+            z-index: 0;
+
+            &::after {
+                position: absolute;
+                right: var(--hero-content-background-right);
+                bottom: var(--hero-content-background-bottom);
+                z-index: -1;
+                display: block;
+                width: var(--hero-content-background-size);
+                height: var(--hero-content-background-size);
+                background: url("/src/assets/icons/star.svg") no-repeat;
+                background-size: 100%;
+                transform: translateY(45%);
+                opacity: 0.7;
+                content: "";
+            }
+        }
+
+        &__title {
+            margin-bottom: var(--hero-title-margin-bottom);
+            max-width: var(--hero-title-max-width);
+
+            &-part {
+                &--first {
+                    font-size: var(--hero-title-part-first-font-size);
+                }
+            }
+        }
+
+        &__text {
+            margin-bottom: var(--hero-text-margin-bottom);
+            line-height: var(--hero-text-lint-height);
+            font-size: var(--hero-text-font-size);
+        }
+
+        &__button {
+            position: relative;
+
+            &-label {
+                position: absolute;
+                top: -21px;
+                right: -40px;
+                display: block;
+                padding: var(--hero-button-label-padding);
+                box-shadow: var(--hero-button-label-box-shadow);
+                border-radius: var(--hero-button-label-border-radius);
+                background: var(--hero-button-label-background);
+                line-height: var(--hero-button-label-line-height);
+                font-weight: var(--hero-button-label-font-weight);
+                font-size: var(--hero-button-label-font-size);
+                rotate: 3.71deg;
+            }
+        }
+
+        &__enhancement {
+            margin-top: var(--hero-enhancement-margin-top);
+        }
+    }
+
+    @media (width > 768px) {
+        .hero {
+            // general
+            --hero-padding-top: 140px;
+
+            // background
+            --hero-content-background-size: 580px;
+            --hero-content-background-right: -5%;
+            --hero-content-background-bottom: 10%;
+
+            // title
+            --hero-title-part-first-font-size: inherit;
+            --hero-title-font-size: 80px;
+            --hero-title-line-height: 70px;
+            --hero-title-max-width: 660px;
+            --hero-title-margin-bottom: 28px;
+
+            // text
+            --hero-text-margin-bottom: 48px;
+            --hero-text-font-size: 24px;
+            --hero-text-lint-height: 29px;
+
+            // button-label
+            --hero-button-label-font-size: 20px;
+            --hero-button-label-line-height: 16px;
+
+            &__title {
+                line-height: var(--hero-title-line-height);
+                font-size: var(--hero-title-font-size);
+            }
+        }
+    }
+</style>
