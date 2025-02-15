@@ -1,0 +1,90 @@
+---
+import bem from "easy-bem";
+
+const cn = bem("image-first-card");
+
+interface Props {
+    class?: string;
+}
+
+const { class: className } = Astro.props as Props;
+---
+
+<div class:list={[cn(), className]}>
+    <div class:list={cn("content-wrapper")}>
+        <div class:list={cn("title")}>
+            <slot name="title" />
+        </div>
+        <div class:list={cn("content")}>
+            <slot name="content" />
+        </div>
+    </div>
+    <div class:list={cn("icon")}>
+        <slot name="icon" />
+    </div>
+</div>
+
+<style is:global lang="scss">
+    @use "../styles/mixins";
+
+    .image-first-card {
+        --image-first-card-background: var(--color-background-primary);
+        --image-first-card-color: var(--color-text-primary);
+        --image-first-card-padding: 12px 8px;
+        --image-first-card-gap: 8px;
+        --image-first-card-border-radius: 8px;
+        --image-first-card-title-font-size: inherit;
+        --image-first-card-title-margin-bottom: 8px;
+        --image-first-card-text-color: var(--color-text-primary);
+        --image-first-card-icon-color: var(--color-brand-main);
+        --image-first-card-icon-size: 40px;
+
+        display: flex;
+        gap: var(--image-first-card-gap);
+        padding: var(--image-first-card-padding);
+
+        @include mixins.box-shadow-light;
+
+        border-radius: var(--image-first-card-border-radius);
+        background: var(--image-first-card-background);
+        color: var(--image-first-card-color);
+
+        &__content-wrapper {
+            order: 2;
+        }
+
+        &__title {
+            margin-bottom: var(--image-first-card-title-margin-bottom);
+            font-size: var(--image-first-card-title-font-size);
+        }
+
+        &__content {
+            opacity: 0.6;
+        }
+
+        &__icon {
+            display: flex;
+            width: var(--image-first-card-icon-size);
+            height: var(--image-first-card-icon-size);
+            color: var(--image-first-card-icon-color);
+        }
+    }
+
+    @media (width > 768px) {
+        .image-first-card {
+            --image-first-card-padding: 12px 12px 24px 12px;
+            --image-first-card-icon-size: 100px;
+
+            flex-direction: column;
+            align-items: center;
+
+            &__title {
+                text-align: center;
+            }
+
+            &__content {
+                text-align: center;
+            }
+        }
+    }
+</style>
