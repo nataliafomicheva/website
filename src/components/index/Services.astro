@@ -1,0 +1,124 @@
+---
+import bem from "easy-bem";
+import Section from "../Section.astro";
+import Container from "../Container.astro";
+import { services } from "../../data/index.json";
+import KingBed from "../../assets/icons/king-bed.svg";
+import House from "../../assets/icons/house.svg";
+import Fence from "../../assets/icons/fence.svg";
+import BusinessCase from "../../assets/icons/business-case.svg";
+import ImageFirstCard from "../ImageFirstCard.astro";
+
+const cn = bem("services");
+---
+
+<Section class:list={cn()}>
+    <Container>
+        <div class:list={cn("content")}>
+            <h2 class:list={cn("title")}>{services.title}</h2>
+            <ul class:list={cn("list")}>
+                <li class:list={cn("item")}>
+                    <ImageFirstCard class:list={cn("card")}>
+                        <h3 class:list={cn("card-title")} slot="title">
+                            {services.list.flats.title}
+                        </h3>
+                        <p class:list={cn("card-content")} slot="content">
+                            {services.list.flats.text}
+                        </p>
+                        <KingBed slot="icon" />
+                    </ImageFirstCard>
+                </li>
+                <li class:list={cn("item")}>
+                    <ImageFirstCard class:list={cn("card")}>
+                        <h3 class:list={cn("card-title")} slot="title">
+                            {services.list.houses.title}
+                        </h3>
+                        <p class:list={cn("card-content")} slot="content">
+                            {services.list.houses.text}
+                        </p>
+                        <House slot="icon" />
+                    </ImageFirstCard>
+                </li>
+                <li class:list={cn("item")}>
+                    <ImageFirstCard class:list={cn("card")}>
+                        <h3 class:list={cn("card-title")} slot="title">
+                            {services.list.lands.title}
+                        </h3>
+                        <p class:list={cn("card-content")} slot="content">
+                            {services.list.lands.text}
+                        </p>
+                        <Fence slot="icon" />
+                    </ImageFirstCard>
+                </li>
+                <li class:list={cn("item")}>
+                    <ImageFirstCard class:list={cn("card")}>
+                        <h3 class:list={cn("card-title")} slot="title">
+                            {services.list.commercial.title}
+                        </h3>
+                        <p class:list={cn("card-content")} slot="content">
+                            {services.list.commercial.text}
+                        </p>
+                        <BusinessCase slot="icon" />
+                    </ImageFirstCard>
+                </li>
+            </ul>
+        </div>
+    </Container>
+</Section>
+
+<style is:global lang="scss">
+    @use "../../styles/mixins";
+
+    .services {
+        --services-background: var(--color-brand-main);
+        --services-color: var(--color-background-primary);
+
+        padding-bottom: 40px;
+        background: var(--services-background);
+        color: var(--services-color);
+
+        &__content {
+            position: relative;
+            z-index: 1;
+        }
+
+        &__title {
+            margin-bottom: 16px;
+        }
+
+        &__list {
+            display: grid;
+            gap: 8px;
+        }
+
+        &__card {
+            height: 100%;
+
+            &-title {
+                font-size: inherit;
+            }
+        }
+    }
+
+    @media (width > 500px) {
+        .services {
+            &__list {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    }
+
+    @media (width > 768px) {
+        .services {
+            &__list {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            &__card {
+                &-content {
+                    @include mixins.text-caption-1;
+                }
+            }
+        }
+    }
+</style>
