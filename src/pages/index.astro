@@ -6,6 +6,7 @@ import Navbar from "../components/Navbar.astro";
 import index from "../data/index.json";
 import Hero from "../components/index/Hero.astro";
 import BaseLayout from "../layouts/BaseLayout/BaseLayout.astro";
+import Services from "../components/index/Services.astro";
 
 const cn = bem("index-page");
 ---
@@ -19,6 +20,7 @@ const cn = bem("index-page");
     <Navbar />
     <Main class:list={cn()}>
         <Hero class:list={cn("hero")} />
+        <Services class:list={cn("services")} />
     </Main>
     <Footer />
 </BaseLayout>
