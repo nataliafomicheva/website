@@ -1,0 +1,60 @@
+---
+import bem from "easy-bem";
+
+const cn = bem("vertical-icon-card");
+
+const { class: className } = Astro.props;
+---
+
+<div class:list={[cn(), className]}>
+    <div class:list={cn("icon")}>
+        <slot name="icon" />
+    </div>
+    <div class:list={cn("title")}>
+        <slot name="title" />
+    </div>
+    <div class:list={cn("content")}>
+        <slot name="content" />
+    </div>
+</div>
+
+<style lang="scss">
+    @use "../styles/mixins";
+
+    .vertical-icon-card {
+        --vertical-icon-card-padding: 8px 12px 12px 12px;
+        --vertical-icon-card-border-radius: 8px;
+        --vertical-icon-card-icon-size: 40px;
+        --vertical-icon-card-icon-margin-bottom: 4px;
+        --vertical-icon-card-title-margin-bottom: 4px;
+
+        @include mixins.box-shadow-light;
+
+        padding: var(--vertical-icon-card-padding);
+        border-radius: var(--vertical-icon-card-border-radius);
+
+        &__icon {
+            display: flex;
+            margin-bottom: var(--vertical-icon-card-icon-margin-bottom);
+            width: var(--vertical-icon-card-icon-size);
+            height: var(--vertical-icon-card-icon-size);
+            color: var(--color-brand-main);
+        }
+
+        &__title {
+            margin-bottom: var(--vertical-icon-card-title-margin-bottom);
+        }
+
+        &__content {
+            color: var(--color-text-secondary);
+        }
+    }
+
+    @media (width > 768px) {
+        .vertical-icon-card {
+            --vertical-icon-card-padding: 16px;
+            --vertical-icon-card-icon-size: 60px;
+            --vertical-icon-card-title-margin-bottom: 8px;
+        }
+    }
+</style>
