@@ -72,6 +72,8 @@ const cn = bem("services");
     .services {
         --services-background: var(--color-brand-main);
         --services-color: var(--color-background-primary);
+        --services-title-margin-bottom: 16px;
+        --services-list-gap: 8px;
 
         padding-bottom: 40px;
         background: var(--services-background);
@@ -83,12 +85,12 @@ const cn = bem("services");
         }
 
         &__title {
-            margin-bottom: 16px;
+            margin-bottom: var(--services-title-margin-bottom);
         }
 
         &__list {
             display: grid;
-            gap: 8px;
+            gap: var(--services-list-gap);
         }
 
         &__card {
@@ -102,6 +104,8 @@ const cn = bem("services");
 
     @media (width > 500px) {
         .services {
+            --services-list-gap: 25px;
+
             &__list {
                 grid-template-columns: 1fr 1fr;
             }
@@ -110,6 +114,8 @@ const cn = bem("services");
 
     @media (width > 768px) {
         .services {
+            --services-title-margin-bottom: 24px;
+
             &__list {
                 grid-template-columns: repeat(4, 1fr);
             }
