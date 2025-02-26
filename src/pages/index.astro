@@ -7,6 +7,7 @@ import index from "../data/index.json";
 import Hero from "../components/index/Hero.astro";
 import BaseLayout from "../layouts/BaseLayout/BaseLayout.astro";
 import Services from "../components/index/Services.astro";
+import Benefits from "../components/index/Benefits.astro";
 
 const cn = bem("index-page");
 ---
@@ -21,6 +22,7 @@ const cn = bem("index-page");
     <Main class:list={cn()}>
         <Hero class:list={cn("hero")} />
         <Services class:list={cn("services")} />
+        <Benefits class:list={cn("benefits")} />
     </Main>
     <Footer />
 </BaseLayout>
