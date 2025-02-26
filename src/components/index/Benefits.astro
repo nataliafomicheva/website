@@ -1,0 +1,119 @@
+---
+import bem from "easy-bem";
+import Section from "../Section.astro";
+import type { HTMLAttributes } from "astro/types";
+import Container from "../Container.astro";
+import { benefits } from "../../data/index.json";
+import VerticalIconCard from "../VerticalIconCard.astro";
+import Handshake from "../../assets/icons/handshake.svg";
+import Diploma from "../../assets/icons/diploma.svg";
+import HandOk from "../../assets/icons/hand-ok.svg";
+import ShieldCheck from "../../assets/icons/shield-check.svg";
+import EyesLookLeft from "../../assets/icons/eyes-look-left.svg";
+
+interface Props extends HTMLAttributes<"section"> {}
+
+const { class: className, ...props } = Astro.props as Props;
+
+const cn = bem("benefits");
+---
+
+<Section class:list={[cn(), className]} {...props}>
+    <Container>
+        <div class:list={cn("content")}>
+            <h2 class:list={cn("title")}>{benefits.title}</h2>
+            <ul class:list={cn("list")}>
+                <li class:list={cn("item")}>
+                    <VerticalIconCard class:list={cn("card")}>
+                        <h3 class:list={cn("card-title")} slot="title">
+                            {benefits.list.experience.title}
+                        </h3>
+                        <p class:list={cn("card-content")} slot="content">
+                            {benefits.list.experience.text}
+                        </p>
+                        <Handshake slot="icon" />
+                    </VerticalIconCard>
+                </li>
+                <li class:list={cn("item")}>
+                    <VerticalIconCard class:list={cn("card")}>
+                        <h3 class:list={cn("card-title")} slot="title">
+                            {benefits.list.qualification.title}
+                        </h3>
+                        <p class:list={cn("card-content")} slot="content">
+                            {benefits.list.qualification.text}
+                        </p>
+                        <Diploma slot="icon" />
+                    </VerticalIconCard>
+                </li>
+                <li class:list={cn("item")}>
+                    <VerticalIconCard class:list={cn("card")}>
+                        <h3 class:list={cn("card-title")} slot="title">
+                            {benefits.list.approach.title}
+                        </h3>
+                        <p class:list={cn("card-content")} slot="content">
+                            {benefits.list.approach.text}
+                        </p>
+                        <HandOk slot="icon" />
+                    </VerticalIconCard>
+                </li>
+                <li class:list={cn("item")}>
+                    <VerticalIconCard class:list={cn("card")}>
+                        <h3 class:list={cn("card-title")} slot="title">
+                            {benefits.list.responsibility.title}
+                        </h3>
+                        <p class:list={cn("card-content")} slot="content">
+                            {benefits.list.responsibility.text}
+                        </p>
+                        <ShieldCheck slot="icon" />
+                    </VerticalIconCard>
+                </li>
+                <li class:list={cn("item")}>
+                    <VerticalIconCard class:list={cn("card")}>
+                        <h3 class:list={cn("card-title")} slot="title">
+                            {benefits.list.trust.title}
+                        </h3>
+                        <p class:list={cn("card-content")} slot="content">
+                            {benefits.list.trust.text}
+                        </p>
+                        <EyesLookLeft slot="icon" />
+                    </VerticalIconCard>
+                </li>
+            </ul>
+        </div>
+    </Container>
+</Section>
+
+<style is:global lang="scss">
+    .benefits {
+        --benefits-padding: 24px 0 20px 0;
+        --benefits-title-margin-bottom: 16px;
+        --benefits-list-gap: 8px;
+
+        padding: var(--benefits-padding);
+
+        &__title {
+            margin-bottom: var(--benefits-title-margin-bottom);
+        }
+
+        &__list {
+            display: grid;
+            gap: var(--benefits-list-gap);
+        }
+
+        &__card {
+            height: 100%;
+        }
+    }
+
+    @media (width > 500px) {
+        .benefits {
+            --benefits-padding: 60px 0;
+            --benefits-title-margin-bottom: 32px;
+            --benefits-list-gap: 24px;
+
+            &__list {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    }
+</style>
