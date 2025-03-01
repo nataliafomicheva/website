@@ -107,13 +107,18 @@ const cn = bem("benefits");
 
     @media (width > 500px) {
         .benefits {
-            --benefits-padding: 60px 0;
             --benefits-title-margin-bottom: 32px;
-            --benefits-list-gap: 24px;
 
             &__list {
                 grid-template-columns: 1fr 1fr;
             }
+        }
+    }
+
+    @media (width > 768px) {
+        .benefits {
+            --benefits-list-gap: 24px;
+            --benefits-padding: 60px 0;
         }
     }
 </style>

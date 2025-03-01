@@ -104,8 +104,6 @@ const cn = bem("services");
 
     @media (width > 500px) {
         .services {
-            --services-list-gap: 25px;
-
             &__list {
                 grid-template-columns: 1fr 1fr;
             }
@@ -115,6 +113,7 @@ const cn = bem("services");
     @media (width > 768px) {
         .services {
             --services-title-margin-bottom: 24px;
+            --services-list-gap: 24px;
 
             &__list {
                 grid-template-columns: repeat(4, 1fr);
