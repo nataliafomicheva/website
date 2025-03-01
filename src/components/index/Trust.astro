@@ -1,0 +1,89 @@
+---
+import bem from "easy-bem";
+import Section from "../Section.astro";
+import Container from "../Container.astro";
+import { trust } from "../../data/index.json";
+import Card from "../Card.astro";
+import { Image } from "astro:assets";
+
+const cn = bem("trust");
+---
+
+<Section class:list={cn()} id="trust">
+    <Container>
+        <div class:list={cn("content")}>
+            <h2 class:list={cn("title")}>{trust.title}</h2>
+            <p class:list={cn("text")}>
+                {trust.text}
+            </p>
+            <ul class:list={cn("list")}>
+                {
+                    trust.list.map(({ imageSrc, alt }) => (
+                        <li class:list={cn("list-item")}>
+                            <Card class:list={cn("card")}>
+                                <Image
+                                    alt={alt}
+                                    height="30"
+                                    src={imageSrc}
+                                    width="100"
+                                />
+                            </Card>
+                        </li>
+                    ))
+                }
+            </ul>
+        </div>
+    </Container>
+</Section>
+
+<style is:global lang="scss">
+    .trust {
+        --trust-padding: 24px 0 20px 0;
+        --trust-title-margin-bottom: 8px;
+        --trust-text-margin-bottom: 20px;
+        --trust-list-grid-template-columns: repeat(2, 1fr);
+        --trust-list-gap: 8px;
+        --trust-card-height: 100px;
+
+        padding: var(--trust-padding);
+        background-color: var(--color-background-primary);
+
+        &__title {
+            margin-bottom: var(--trust-title-margin-bottom);
+        }
+
+        &__text {
+            margin-bottom: var(--trust-text-margin-bottom);
+            color: var(--color-text-secondary);
+        }
+
+        &__list {
+            display: grid;
+            grid-template-columns: var(--trust-list-grid-template-columns);
+            gap: var(--trust-list-gap);
+        }
+
+        &__card {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: var(--trust-card-height);
+        }
+    }
+
+    @media (width > 500px) {
+        .trust {
+            --trust-list-grid-template-columns: repeat(3, 1fr);
+        }
+    }
+
+    @media (width > 768px) {
+        .trust {
+            --trust-padding: 20px 0 60px 0;
+            --trust-title-margin-bottom: 12px;
+            --trust-text-margin-bottom: 32px;
+            --trust-list-gap: 24px;
+            --trust-card-height: 180px;
+        }
+    }
+</style>
