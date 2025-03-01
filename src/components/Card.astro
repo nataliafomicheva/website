@@ -1,0 +1,32 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import bem from "easy-bem";
+
+interface Props extends HTMLAttributes<"div"> {
+    view?: "outlined";
+}
+
+const cn = bem("card");
+
+const { view = "outlined", class: className } = Astro.props;
+---
+
+<div class:list={[cn({ view }), className]}>
+    <slot />
+</div>
+
+<style lang="scss">
+    .card {
+        --card-border: none;
+        --card-border-radius: 8px;
+
+        border: var(--card-border);
+        border-radius: var(--card-border-radius);
+
+        &--view {
+            &_outlined {
+                --card-border: 1px solid rgb(0 0 0 / 10%);
+            }
+        }
+    }
+</style>
