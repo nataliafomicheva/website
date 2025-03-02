@@ -8,10 +8,10 @@ interface Props extends HTMLAttributes<"div"> {
 
 const cn = bem("card");
 
-const { view = "outlined", class: className } = Astro.props;
+const { view = "outlined", class: className, ...props } = Astro.props as Props;
 ---
 
-<div class:list={[cn({ view }), className]}>
+<div class:list={[cn({ view }), className]} {...props}>
     <slot />
 </div>
 
