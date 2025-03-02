@@ -9,6 +9,7 @@ import BaseLayout from "../layouts/BaseLayout/BaseLayout.astro";
 import Services from "../components/index/Services.astro";
 import Benefits from "../components/index/Benefits.astro";
 import Trust from "../components/index/Trust.astro";
+import Reviews from "../components/index/Reviews.astro";
 
 const cn = bem("index-page");
 ---
@@ -25,6 +26,7 @@ const cn = bem("index-page");
         <Services class:list={cn("services")} />
         <Benefits class:list={cn("benefits")} />
         <Trust class:list={cn("trust")} />
+        <Reviews class:list={cn("reviews")} />
     </Main>
     <Footer />
 </BaseLayout>
