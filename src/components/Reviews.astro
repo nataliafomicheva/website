@@ -1,0 +1,68 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import bem from "easy-bem";
+import { reviews } from "../data/reviews.json";
+import Card from "./Card.astro";
+
+interface Props extends HTMLAttributes<"div"> {}
+
+const cn = bem("reviews");
+
+const { class: className, ...props } = Astro.props as Props;
+---
+
+<div class:list={[cn(), className]} {...props}>
+    <Card class:list={cn("content")}>
+        <iframe
+            class:list={cn("iframe")}
+            loading="lazy"
+            src={reviews.iframe.src}
+            title={reviews.iframe.title}></iframe>
+        <a class:list={cn("link")} href={reviews.link.href} target="_blank">
+            {reviews.link.text}
+        </a>
+    </Card>
+</div>
+
+<style lang="scss">
+    .reviews {
+        --reviews-content-max-width: 560px;
+        --reviews-content-height: 800px;
+        --reviews-link-bottom: 8px;
+        --reviews-link-padding: 0 16px;
+        --reviews-link-max-height: 14px;
+        --reviews-link-color: #b3b3b3;
+        --reviews-link-font-size: 10px;
+        --reviews-link-font-family: "YS Text", sans-serif;
+
+        &__content {
+            position: relative;
+            max-width: var(--reviews-content-max-width);
+            height: var(--reviews-content-height);
+            overflow: hidden;
+        }
+
+        &__iframe {
+            width: 100%;
+            height: 100%;
+        }
+
+        &__link {
+            position: absolute;
+            bottom: var(--reviews-link-bottom);
+            left: 0;
+            display: block;
+            padding: var(--reviews-link-padding);
+            width: 100%;
+            max-height: var(--reviews-link-max-height);
+            overflow: hidden;
+            color: var(--reviews-link-color);
+            text-align: center;
+            text-decoration: none;
+            font-size: var(--reviews-link-font-size);
+            font-family: var(--reviews-link-font-family);
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+    }
+</style>
