@@ -1,0 +1,62 @@
+---
+import bem from "easy-bem";
+import Section from "../Section.astro";
+import type { HTMLAttributes } from "astro/types";
+import Container from "../Container.astro";
+import { faq } from "../../data/index.json";
+import Accordion from "../Accordion.astro";
+
+interface Props extends HTMLAttributes<"section"> {}
+
+const cn = bem("faq");
+
+const { class: className, ...props } = Astro.props as Props;
+---
+
+<Section class:list={[cn(), className]} {...props}>
+    <Container>
+        <div class:list={cn("content")}>
+            <h2 class:list={cn("title")}>{faq.title}</h2>
+            <ul class:list={cn("list")}>
+                {
+                    faq.list.map(({ question, answer }) => (
+                        <li class:list={cn("item")}>
+                            <Accordion>
+                                <span class:list={cn("item-text")} slot="text">
+                                    {question}
+                                </span>
+                                <span slot="content">{answer}</span>
+                            </Accordion>
+                        </li>
+                    ))
+                }
+            </ul>
+        </div>
+    </Container>
+</Section>
+
+<style lang="scss">
+    .faq {
+        --faq-padding: 24px 0 40px 0;
+        --faq-title-margin-bottom: 16px;
+        --faq-item-border: 1px solid #e6e6e6;
+
+        &__title {
+            margin-bottom: var(--faq-title-margin-bottom);
+        }
+
+        padding: var(--faq-padding);
+
+        &__item {
+            border-top: var(--faq-item-border);
+
+            &:last-of-type {
+                border-bottom: var(--faq-item-border);
+            }
+
+            &-text {
+                font-weight: 500;
+            }
+        }
+    }
+</style>
