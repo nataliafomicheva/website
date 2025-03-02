@@ -6,7 +6,7 @@ import Card from "./Card.astro";
 
 interface Props extends HTMLAttributes<"div"> {}
 
-const cn = bem("reviews");
+const cn = bem("reviews-widget");
 
 const { class: className, ...props } = Astro.props as Props;
 ---
@@ -25,20 +25,21 @@ const { class: className, ...props } = Astro.props as Props;
 </div>
 
 <style lang="scss">
-    .reviews {
-        --reviews-content-max-width: 560px;
-        --reviews-content-height: 800px;
-        --reviews-link-bottom: 8px;
-        --reviews-link-padding: 0 16px;
-        --reviews-link-max-height: 14px;
-        --reviews-link-color: #b3b3b3;
-        --reviews-link-font-size: 10px;
-        --reviews-link-font-family: "YS Text", sans-serif;
+    .reviews-widget {
+        --reviews-widget-content-max-width: 720px;
+        --reviews-widget-content-height: 800px;
+        --reviews-widget-link-bottom: 8px;
+        --reviews-widget-link-padding: 0 16px;
+        --reviews-widget-link-max-height: 14px;
+        --reviews-widget-link-color: #b3b3b3;
+        --reviews-widget-link-font-size: 10px;
+        --reviews-widget-link-font-family: "YS Text", sans-serif;
 
         &__content {
             position: relative;
-            max-width: var(--reviews-content-max-width);
-            height: var(--reviews-content-height);
+            width: 100%;
+            max-width: var(--reviews-widget-content-max-width);
+            height: var(--reviews-widget-content-height);
             overflow: hidden;
         }
 
@@ -49,18 +50,18 @@ const { class: className, ...props } = Astro.props as Props;
 
         &__link {
             position: absolute;
-            bottom: var(--reviews-link-bottom);
+            bottom: var(--reviews-widget-link-bottom);
             left: 0;
             display: block;
-            padding: var(--reviews-link-padding);
+            padding: var(--reviews-widget-link-padding);
             width: 100%;
-            max-height: var(--reviews-link-max-height);
+            max-height: var(--reviews-widget-link-max-height);
             overflow: hidden;
-            color: var(--reviews-link-color);
+            color: var(--reviews-widget-link-color);
             text-align: center;
             text-decoration: none;
-            font-size: var(--reviews-link-font-size);
-            font-family: var(--reviews-link-font-family);
+            font-size: var(--reviews-widget-link-font-size);
+            font-family: var(--reviews-widget-link-font-family);
             text-overflow: ellipsis;
             white-space: nowrap;
         }
