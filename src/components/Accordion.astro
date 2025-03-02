@@ -1,0 +1,95 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import bem from "easy-bem";
+import Plus from "../assets/icons/plus.svg";
+import Minus from "../assets/icons/minus.svg";
+
+interface Props extends HTMLAttributes<"details"> {}
+
+const ICON_SIZE = 16;
+
+const cn = bem("accordion");
+
+const { class: className, ...props } = Astro.props as Props;
+---
+
+<details class:list={[cn(), className]} {...props}>
+    <summary class:list={cn("summary")}>
+        <slot name="text" />
+        <span class:list={cn("icon-container")}>
+            <Plus class:list={cn("icon", { plus: true })} size={ICON_SIZE} />
+            <Minus class:list={cn("icon", { minus: true })} size={ICON_SIZE} />
+        </span>
+    </summary>
+    <div class:list={cn("content")}>
+        <slot name="content" />
+    </div>
+</details>
+
+<style lang="scss">
+    .accordion {
+        --accordion-padding: 16px 8px;
+
+        padding: var(--accordion-padding);
+        cursor: pointer;
+        transition: background-color 50ms linear;
+
+        &:hover {
+            background-color: rgb(0 0 0 / 3%);
+        }
+
+        &__summary {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            list-style: none;
+        }
+
+        &__icon {
+            opacity: 0.3;
+            display: block;
+
+            &--minus {
+                display: none;
+            }
+        }
+
+        &__content {
+            margin-top: 16px;
+            color: var(--color-text-secondary);
+        }
+    }
+
+    .accordion[open] .accordion__icon--plus {
+        display: none;
+    }
+
+    .accordion[open] .accordion__icon--minus {
+        display: block;
+    }
+
+    @media (width > 768px) {
+        .accordion {
+            --accordion-padding: 24px;
+        }
+    }
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const accordionElements = Array.from(
+            document.querySelectorAll(".accordion"),
+        ) as HTMLDetailsElement[];
+
+        accordionElements.forEach((accordion) => {
+            accordion.addEventListener("click", (evt) => {
+                evt.preventDefault();
+                if (accordion.open) {
+                    accordion.removeAttribute("open");
+                } else {
+                    accordion.setAttribute("open", "true");
+                }
+            });
+        });
+    });
+</script>
