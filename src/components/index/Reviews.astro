@@ -1,0 +1,59 @@
+---
+import bem from "easy-bem";
+import Section from "../Section.astro";
+import Container from "../Container.astro";
+import type { HTMLAttributes } from "astro/types";
+import { reviews } from "../../data/index.json";
+import ReviewsWidget from "../ReviewsWidget.astro";
+
+interface Props extends HTMLAttributes<"section"> {}
+
+const cn = bem("reviews");
+
+const { class: className, ...props } = Astro.props as Props;
+---
+
+<Section class:list={[cn(), className]} {...props}>
+    <Container>
+        <div class:list={cn("content")}>
+            <h2 class:list={cn("title")}>{reviews.title}</h2>
+            <ReviewsWidget class:list={cn("widget")} />
+        </div>
+    </Container>
+</Section>
+
+<style lang="scss">
+    .reviews {
+        --reviews-padding: 24px 0 20px 0;
+        --reviews-title-margin-bottom: 16px;
+
+        padding: var(--reviews-padding);
+
+        &__content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        &__title {
+            align-self: flex-start;
+            margin-bottom: var(--reviews-title-margin-bottom);
+        }
+
+        &__widget {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+    }
+
+    @media (width > 768px) {
+        .reviews {
+            --reviews-padding: 20px 0 60px 0;
+
+            &__title {
+                align-self: center;
+            }
+        }
+    }
+</style>
