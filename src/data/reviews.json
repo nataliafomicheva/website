@@ -1,0 +1,12 @@
+{
+  "reviews": {
+    "iframe": {
+      "title": "Отзывы о компании (Яндекс Карты)",
+      "src": "https://yandex.ru/maps-reviews-widget/114587212082?comments"
+    },
+    "link": {
+      "text": "Независимая оценка недвижимости на карте Малоярославца — Яндекс Карты",
+      "href": "https://yandex.ru/maps/org/nezavisimaya_otsenka_nedvizhimosti/114587212082/"
+    }
+  }
+}
