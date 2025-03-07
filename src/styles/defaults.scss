@@ -8,7 +8,7 @@ a {
     position: relative;
     color: inherit;
     text-decoration: none;
-    transition: color 50ms linear;
+    transition: var(--text-color-transition);
 
     &:hover {
         color: var(--color-text-link);

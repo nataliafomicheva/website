@@ -185,7 +185,9 @@ const { links } = Astro.props;
 
                 @include mixins.text-caption-1;
 
-                transition: background-color 50ms ease-out;
+                transition:
+                    background-color 50ms ease-out,
+                    var(--text-color-transition);
 
                 &:hover {
                     background: var(--navbar-menu-dropdown-link-background);
