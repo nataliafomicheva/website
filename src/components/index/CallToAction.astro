@@ -1,0 +1,82 @@
+---
+import bem from "easy-bem";
+import Section from "../Section.astro";
+import Container from "../Container.astro";
+import { callToAction } from "../../data/index.json";
+import Button from "../Button.astro";
+
+const cn = bem("call-to-action");
+---
+
+<Section class:list={cn()}>
+    <Container>
+        <div class:list={cn("content")}>
+            <h2 class:list={cn("title")}>{callToAction.title}</h2>
+            <p class:list={cn("text")}>{callToAction.text}</p>
+            <Button class:list={cn("button")} size="l" view="primary">
+                {callToAction.button.text}
+            </Button>
+        </div>
+    </Container>
+</Section>
+
+<style lang="scss">
+    .call-to-action {
+        --call-to-action-padding: 24px 0 32px 0;
+        --call-to-action-title-margin-bottom: 8px;
+        --call-to-action-text-margin-bottom: 40px;
+        --call-to-action-text-max-width: 370px;
+        --call-to-action-background-size: 240px;
+        --call-to-action-background-right: 0%;
+        --call-to-action-background-bottom: 50%;
+
+        padding: var(--call-to-action-padding);
+        overflow: hidden;
+        background-color: var(--color-brand-main);
+        color: var(--color-text-contrast);
+
+        &__content {
+            position: relative;
+            z-index: 0;
+
+            &::after {
+                position: absolute;
+                right: var(--call-to-action-background-right);
+                bottom: var(--call-to-action-background-bottom);
+                z-index: -1;
+                display: block;
+                width: var(--call-to-action-background-size);
+                height: var(--call-to-action-background-size);
+                background: url("/src/assets/icons/star.svg") no-repeat;
+                background-size: 100%;
+                rotate: -25deg;
+                opacity: 0.7;
+                content: "";
+                transform: translateY(70%);
+            }
+        }
+
+        &__title {
+            margin-bottom: var(--call-to-action-title-margin-bottom);
+        }
+
+        &__text {
+            margin-bottom: var(--call-to-action-text-margin-bottom);
+            max-width: var(--call-to-action-text-max-width);
+        }
+    }
+
+    @media (width > 550px) {
+        .call-to-action {
+            --call-to-action-background-right: 50px;
+            --call-to-action-background-size: 300px;
+        }
+    }
+
+    @media (width > 768px) {
+        .call-to-action {
+            --call-to-action-padding: 60px 0;
+            --call-to-action-background-right: 50px;
+        }
+    }
+</style>
