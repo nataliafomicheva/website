@@ -155,9 +155,17 @@ const { links } = Astro.props;
                 }
             }
 
+            &-link {
+                text-decoration: none;
+            }
+
             &--hidden {
                 display: none;
             }
+        }
+
+        &__link {
+            text-decoration: none;
         }
 
         &__dropdown {
@@ -173,6 +181,7 @@ const { links } = Astro.props;
             &-link {
                 display: block;
                 padding: var(--navbar-menu-dropdown-link-padding);
+                text-decoration: none;
 
                 @include mixins.text-caption-1;
 
