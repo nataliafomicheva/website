@@ -43,6 +43,11 @@ const {
             align-items: center;
             gap: var(--details-summary-gap);
             list-style: none;
+            transition: var(--text-color-transition);
+
+            &:hover {
+                color: var(--color-text-link);
+            }
         }
 
         &__icon {

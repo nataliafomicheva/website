@@ -1,9 +1,11 @@
 @use "./colors";
 @use "./typography";
 @use "./viewport";
+@use "./transitions";
 
 @mixin variables {
     @include colors.variables;
     @include typography.variables;
     @include viewport.variables;
+    @include transitions.variables;
 }
